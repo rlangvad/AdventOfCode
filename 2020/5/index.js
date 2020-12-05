@@ -5,33 +5,31 @@ const input = fs
   .map((i) => i.split(''))
 
 const getRow = (value) => {
-  return value.reduce(
-    (prev, char) => {
-      let range = prev.high - prev.low + 1
-      if (char === 'F') {
-        prev.high = range === 1 ? range : prev.high - range / 2
-      } else if (char === 'B') {
-        prev.low = range === 1 ? range : prev.low + range / 2
-      }
-      return prev
-    },
-    { low: 0, high: 127 }
-  ).low
+  let low = 0
+  let high = 127
+  value.forEach((char) => {
+    let range = high - low + 1
+    if (char === 'F') {
+      high = range === 1 ? range : high - range / 2
+    } else if (char === 'B') {
+      low = range === 1 ? range : low + range / 2
+    }
+  })
+  return low
 }
 
 const getSeat = (value) => {
-  return value.reduce(
-    (prev, char) => {
-      let range = prev.high - prev.low + 1
-      if (char === 'L') {
-        prev.high = range === 1 ? range : prev.high - range / 2
-      } else if (char === 'R') {
-        prev.low = range === 1 ? range : prev.low + range / 2
-      }
-      return prev
-    },
-    { low: 0, high: 7 }
-  ).high
+  let low = 0
+  let high = 7
+  value.forEach((char) => {
+    let range = high - low + 1
+    if (char === 'L') {
+      high = range === 1 ? range : high - range / 2
+    } else if (char === 'R') {
+      low = range === 1 ? range : low + range / 2
+    }
+  })
+  return high
 }
 
 const seatIds = []
